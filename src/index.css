@@ -1,21 +1,19 @@
-/*
-color palette
-#F2EFE7
-#9ACBD0
-#48A6A7
-#2973B2
-#4C7B8B
- */
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-body{
-  background-color: #4C7B8B;
+body {
+  background-color: #4c7b8b;
   font-family: sans-serif;
 }
-.container{
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.container {
+  text-align: center;
   width: 500px;
   height: 600px;
   border-radius: 10px;
@@ -23,11 +21,10 @@ body{
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
-  background-color: #F2EFE7;
-
+  transform: translate(-50%, -50%);
+  background-color: #f2efe7;
 }
-.container input{
+.container input {
   width: 300px;
   height: 30px;
   border-radius: 40px;
@@ -36,15 +33,42 @@ body{
   margin: 20px 20px 20px 0px;
   border: 1px solid black;
 }
-.container button{
+.container button {
   width: 50px;
   height: 30px;
   border-radius: 40px;
-  background-color:#9ACBD0 ;
+  background-color: #5d8736;
 }
-.todoList{
-  margin: 30px 0px 0px 20px;
+.todoList {
+  margin: 10px 0px 0px 20px;
 }
-.todoList ul{
-  line-height: 30px;
+.todoList ul li {
+  list-style-type: none;
+}
+.taskContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+  width: 400px;
+  height: 50px;
+  border-radius: 10px;
+  align-items: center;
+  background-color: #e5d0ac;
+}
+.taskContainer p {
+  margin-right: 0px;
+}
+.taskContainer .checkBox {
+  width: 100px;
+  height: 20px;
+}
+.taskContainer .deleteBtn {
+  background-color: #8e1616;
+}
+.taskContainer .editBtn {
+  background-color: #155e95;
+}
+.taskContainer .editInput {
+  width: 70px;
+  height: 20px;
 }

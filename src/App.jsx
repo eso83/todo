@@ -1,12 +1,11 @@
-import { useState ,createContext } from 'react'
-import Todo from './components/todo'
+import Todo from "./components/todo";
 
-const App=()=> {
+const App = () => {
   return (
     <>
-      <Todo/>
+      <Todo />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
