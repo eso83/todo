@@ -1,21 +1,43 @@
-const Todo=()=>{
-return(
+import React, { useState } from "react";
+
+const Todo = () => {
+  const [task, setTask] = useState("");
+  const [taskList, setTaskList] = useState([]);
+
+  const handleTask = (e) => {
+    setTask(e.target.value);
+  };
+
+  const handleAddTask = () => {
+      if(task===''){alert("please add your task")}
+      else{setTaskList([...taskList, task]);
+        setTask("");}
+      
+  };
+
+  return (
     <>
-    <div className="container">
+      <div className="container">
         <h1>To-Do List</h1>
-        <input type="text"  placeholder="add your task"/>
-        <button>Add</button>
+        <input
+          type="text"
+          placeholder="add your task"
+          value={task}
+          onChange={handleTask}
+        />
+        <button onClick={handleAddTask}>Add</button>
         <div className="todoList">
-            <ul>
-            <li>task1</li>
-            <li>task2</li>
-            <li>task3</li>
-            <li>task4</li>
-            <li>task5</li>
-            </ul>
+          <ul>
+            {taskList.length === 0 ? (
+              "addTask"
+            ) : (
+              taskList.map((item, index) => <li key={index}><input type="checkbox" value="" />{item}</li> )
+            )}
+          </ul>
         </div>
-    </div>
+      </div>
     </>
-)
-}
-export default Todo
+  );
+};
+
+export default Todo;
