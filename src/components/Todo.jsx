@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
+import Task from "./Task";
+import Input from "./Input";
 
+export const taskContext = createContext();
 const Todo = () => {
   const [task, setTask] = useState({ task: "", status: false });
   const [taskList, setTaskList] = useState(() => {
@@ -49,57 +52,29 @@ const Todo = () => {
   return (
     <>
       <div className="container">
-        <h1>To-Do List</h1>
-        <input
-          type="text"
-          placeholder="add your task"
-          value={task.task}
-          onChange={handleTask}
-        />
-        <button onClick={handleAddTask}>Add</button>
+        <taskContext.Provider value={{ task, handleTask, handleAddTask }}>
+          <Input />
+        </taskContext.Provider>
         <div className="todoList">
           <ul>
-            {taskList.length === 0
-              ? "addTask"
-              : taskList.map((item, index) => (
-                  <div className="taskContainer" key={index}>
-                    <p>task:</p>
-                    <li>
-                      {editIndex === index ? (
-                        <input
-                          className="editInput"
-                          type="text"
-                          value={editTask}
-                          onChange={(e) => setEditTask(e.target.value)}
-                        />
-                      ) : (
-                        item.task
-                      )}
-                    </li>
-                    <input
-                      className="checkBox"
-                      type="checkbox"
-                      onChange={() => handleStatus(index)}
-                      checked={item.status}
-                    />
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="deleteBtn"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() =>
-                        editIndex === index
-                          ? handelSaveTask(index)
-                          : handleEdite(index)
-                      }
-                      className="editBtn"
-                    >
-                      {editIndex === index ? "Save" : "Edit"}
-                    </button>
-                  </div>
-                ))}
+            {taskList.length === 0 ? (
+              "addTask"
+            ) : (
+              <taskContext.Provider
+                value={{
+                  taskList,
+                  editIndex,
+                  setEditTask,
+                  editTask,
+                  handleStatus,
+                  handleDelete,
+                  handelSaveTask,
+                  handleEdite,
+                }}
+              >
+                <Task />
+              </taskContext.Provider>
+            )}
           </ul>
         </div>
       </div>
