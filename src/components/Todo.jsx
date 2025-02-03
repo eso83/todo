@@ -1,9 +1,11 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import Task from "./Task";
 import Input from "./Input";
+import { logInContext } from "../App";
 
 export const taskContext = createContext();
 const Todo = () => {
+  const logIn = useContext(logInContext);
   const [task, setTask] = useState({ task: "", status: false });
   const [taskList, setTaskList] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -48,6 +50,10 @@ const Todo = () => {
     setTaskList(newTaskList);
     setEditIndex(null);
   };
+  const handleLogout = () => {
+    logIn.setIsLogIn(false);
+    logIn.setIsLogIn(false);
+  };
 
   return (
     <>
@@ -78,6 +84,9 @@ const Todo = () => {
           </ul>
         </div>
       </div>
+      <button onClick={handleLogout} className="logout">
+        Logout
+      </button>
     </>
   );
 };

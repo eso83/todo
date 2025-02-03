@@ -72,3 +72,12 @@ button {
   width: 70px;
   height: 20px;
 }
+.logout {
+  width: 80px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #155e95;
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
