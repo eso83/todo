@@ -3,11 +3,16 @@ import { logInContext } from "../App";
 const LogIn = () => {
   const logIn = useContext(logInContext);
   const [profileInfo, setProfileInfo] = useState({
-    userName: "",
-    passWord: "",
+    username: "",
+    password: "",
   });
-  const handleUserName = (e) => {
-    profileInfo.userName = e.target.value;
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value
+     setProfileInfo(prev=> ({
+       ...prev,
+       [name]: value
+     }))
   };
   const handlePassWord = (e) => {
     profileInfo.passWord = e.target.value;
@@ -26,12 +31,16 @@ const LogIn = () => {
         <input
           onChange={handleUserName}
           type="text"
-          placeholder="Enter userName..."
+          placeholder="Enter username..."
+          name='username'
+          onChange={handleChange}
         />
         <input
           onChange={handlePassWord}
           type="password"
-          placeholder="Enter passWord..."
+          placeholder="Enter passweord..."
+          name="password"
+          onChange={handleChange}
         />
         <br />
         <button onClick={handleLogIn}>LogIn</button>
