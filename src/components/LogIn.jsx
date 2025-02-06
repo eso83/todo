@@ -3,17 +3,19 @@ import { logInContext } from "../App";
 const LogIn = () => {
   const logIn = useContext(logInContext);
   const [profileInfo, setProfileInfo] = useState({
-    userName: "",
-    passWord: "",
+    username: "",
+    password: "",
   });
-  const handleUserName = (e) => {
-    profileInfo.userName = e.target.value;
-  };
-  const handlePassWord = (e) => {
-    profileInfo.passWord = e.target.value;
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setProfileInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   const handleLogIn = () => {
-    if (profileInfo.passWord === "admin" && profileInfo.userName === "admin") {
+    if (profileInfo.password === "admin" && profileInfo.username === "admin") {
       logIn.setIsLogIn(true);
     } else {
       alert("userName or Password is incorrect!");
@@ -24,14 +26,16 @@ const LogIn = () => {
       <div className="container">
         <h1>LogIn</h1>
         <input
-          onChange={handleUserName}
           type="text"
-          placeholder="Enter userName..."
+          placeholder="Enter username..."
+          name="username"
+          onChange={handleChange}
         />
         <input
-          onChange={handlePassWord}
           type="password"
-          placeholder="Enter passWord..."
+          placeholder="Enter passweord..."
+          name="password"
+          onChange={handleChange}
         />
         <br />
         <button onClick={handleLogIn}>LogIn</button>
