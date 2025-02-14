@@ -1,22 +1,35 @@
 import { useContext } from "react";
-import { taskContext } from "./todo";
+import { taskContext } from "../context/TodoContext";
 import { v4 as uuidv4 } from "uuid";
 const Task = () => {
-  const task = useContext(taskContext);
+  const {
+    taskList,
+    editIndex,
+    setEditTask,
+    editTask,
+    handleStatus,
+    handleDelete,
+    handleSaveTask,
+    handleEdit,
+    task,
+    handleTask,
+    handleAddTask,
+    handleLogout,
+  } = useContext(taskContext);
   return (
     <>
-      {task.taskList.map((item, index) => {
+      {taskList.map((item, index) => {
         const uid = uuidv4();
         return (
           <div className="taskContainer" key={uid}>
             <p>task:</p>
             <li>
-              {task.editIndex === index ? (
+              {editIndex === index ? (
                 <input
                   className="editInput"
                   type="text"
-                  value={task.editTask}
-                  onChange={(e) => task.setEditTask(e.target.value)}
+                  value={editTask}
+                  onChange={(e) => setEditTask(e.target.value)}
                 />
               ) : (
                 item.task
@@ -25,24 +38,19 @@ const Task = () => {
             <input
               className="checkBox"
               type="checkbox"
-              onChange={() => task.handleStatus(index)}
+              onChange={() => handleStatus(index)}
               checked={item.status}
             />
-            <button
-              onClick={() => task.handleDelete(index)}
-              className="deleteBtn"
-            >
+            <button onClick={() => handleDelete(index)} className="deleteBtn">
               Delete
             </button>
             <button
               onClick={() =>
-                task.editIndex === index
-                  ? task.handelSaveTask(index)
-                  : task.handleEdite(index)
+                editIndex === index ? handleSaveTask(index) : handleEdit(index)
               }
               className="editBtn"
             >
-              {task.editIndex === index ? "Save" : "Edit"}
+              {editIndex === index ? "Save" : "Edit"}
             </button>
           </div>
         );

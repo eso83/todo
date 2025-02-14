@@ -1,6 +1,7 @@
-import Todo from "./components/todo";
+import Todo from "./pages/TodoPage";
 import LogIn from "./components/LogIn";
-import { createContext, useEffect, useState } from "react";
+
+import { createContext, useContext, useEffect, useState } from "react";
 export const logInContext = createContext();
 const App = () => {
   const [isLogIn, setIsLogIn] = useState(() => {

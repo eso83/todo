@@ -1,11 +1,9 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
-import Task from "./Task";
-import Input from "./Input";
-import { logInContext } from "../App";
+// TodoContext.js
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const taskContext = createContext();
-const Todo = () => {
-  const logIn = useContext(logInContext);
+
+const TodoListProvider = ({ children }) => {
   const [task, setTask] = useState({ task: "", status: false });
   const [taskList, setTaskList] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -30,65 +28,55 @@ const Todo = () => {
       setTask({ task: "", status: false });
     }
   };
+
   const handleStatus = (index) => {
     const newTaskList = [...taskList];
     newTaskList[index].status = !newTaskList[index].status;
     setTaskList(newTaskList);
   };
+
   const handleDelete = (index) => {
     const newTaskList = [...taskList];
     newTaskList.splice(index, 1);
     setTaskList(newTaskList);
   };
-  const handleEdite = (index) => {
+
+  const handleEdit = (index) => {
     setEditIndex(index);
     setEditTask(taskList[index].task);
   };
-  const handelSaveTask = (index) => {
+
+  const handleSaveTask = (index) => {
     const newTaskList = [...taskList];
     newTaskList[index].task = editTask;
     setTaskList(newTaskList);
     setEditIndex(null);
   };
+
   const handleLogout = () => {
-    logIn.setIsLogIn(false);
-    logIn.setIsLogIn(false);
+    console.log("Logged out");
   };
 
   return (
-    <>
-      <div className="container">
-        <taskContext.Provider value={{ task, handleTask, handleAddTask }}>
-          <Input />
-        </taskContext.Provider>
-        <div className="todoList">
-          <ul>
-            {taskList.length === 0 ? (
-              "addTask"
-            ) : (
-              <taskContext.Provider
-                value={{
-                  taskList,
-                  editIndex,
-                  setEditTask,
-                  editTask,
-                  handleStatus,
-                  handleDelete,
-                  handelSaveTask,
-                  handleEdite,
-                }}
-              >
-                <Task />
-              </taskContext.Provider>
-            )}
-          </ul>
-        </div>
-      </div>
-      <button onClick={handleLogout} className="logout">
-        Logout
-      </button>
-    </>
+    <taskContext.Provider
+      value={{
+        taskList,
+        editIndex,
+        setEditTask,
+        editTask,
+        handleStatus,
+        handleDelete,
+        handleSaveTask,
+        handleEdit,
+        task,
+        handleTask,
+        handleAddTask,
+        handleLogout,
+      }}
+    >
+      {children}
+    </taskContext.Provider>
   );
 };
 
-export default Todo;
+export default TodoListProvider;
