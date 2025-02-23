@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const taskContext = createContext();
 
-const TodoListProvider = ({ children }) => {
+const AppProvider = ({ children, logInStatus }) => {
   const [task, setTask] = useState({ task: "", status: false });
   const [taskList, setTaskList] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -15,6 +15,30 @@ const TodoListProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(taskList));
   }, [taskList]);
+  const isLogIn = logInStatus.isLogIn;
+  const setIsLogIn = logInStatus.setIsLogIn;
+  const [profileInfo, setProfileInfo] = useState({
+    username: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setProfileInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleLogIn = () => {
+    if (profileInfo.password === "admin" && profileInfo.username === "admin") {
+      setIsLogIn(true);
+    } else {
+      alert("userName or Password is incorrect!");
+    }
+  };
+  const handleLogOut = () => {
+    setIsLogIn(!isLogIn);
+  };
 
   const handleTask = (e) => {
     setTask({ ...task, task: e.target.value });
@@ -53,10 +77,6 @@ const TodoListProvider = ({ children }) => {
     setEditIndex(null);
   };
 
-  const handleLogout = () => {
-    console.log("Logged out");
-  };
-
   return (
     <taskContext.Provider
       value={{
@@ -71,7 +91,9 @@ const TodoListProvider = ({ children }) => {
         task,
         handleTask,
         handleAddTask,
-        handleLogout,
+        handleChange,
+        handleLogIn,
+        handleLogOut,
       }}
     >
       {children}
@@ -79,4 +101,4 @@ const TodoListProvider = ({ children }) => {
   );
 };
 
-export default TodoListProvider;
+export default AppProvider;

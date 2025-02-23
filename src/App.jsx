@@ -1,8 +1,7 @@
 import Todo from "./pages/TodoPage";
-import LogIn from "./components/LogIn";
-
-import { createContext, useContext, useEffect, useState } from "react";
-export const logInContext = createContext();
+import AppProvider from "./context/AppContext";
+import LogInPage from "./pages/LogInPage";
+import { useEffect, useState } from "react";
 const App = () => {
   const [isLogIn, setIsLogIn] = useState(() => {
     const logIn = localStorage.getItem("isLogIn");
@@ -11,13 +10,14 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("isLogIn", JSON.stringify(isLogIn));
   }, [isLogIn]);
+
   return (
     <>
-      <logInContext.Provider value={{ isLogIn, setIsLogIn }}>
-        {isLogIn === true ? <Todo /> : <LogIn />}
-      </logInContext.Provider>
+      <AppProvider logInStatus={{ isLogIn, setIsLogIn }}>
+        {isLogIn ? <Todo /> : <LogInPage />}
+      </AppProvider>
     </>
   );
 };
-
+// app provider nadare baiad dorost she
 export default App;
